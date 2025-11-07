@@ -13,17 +13,11 @@
           this.finishSound = document.querySelector("#finish-sound");
           this.finishPlatform = document.querySelector("#final-platform");
 
-          let soundPlayed = false;
-
           this.el.addEventListener("teleported", (e) => {
             this.teleportSound.components.sound.playSound();
 
-            if (
-              e.detail.landingTarget.id === "final-platform" &&
-              !soundPlayed
-            ) {
+            if (e.detail.landingTarget.id === "#final-platform") {
               this.finishSound.components.sound.playSound();
-              soundPlayed = true;
             }
           });
         },
