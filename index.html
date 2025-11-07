@@ -15,7 +15,6 @@
 
           this.el.addEventListener("teleported", (e) => {
             this.teleportSound.components.sound.playSound();
-            this.finishSound.components.sound.playSound();
 
             if (e.detail.landingTarget === this.finishPlatform) {
               this.finishSound.components.sound.playSound();
