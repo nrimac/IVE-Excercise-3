@@ -155,12 +155,14 @@
         <a-entity
           id="leftHand"
           hand-controls="hand: left; handModelStyle: toon; color: #15ACCF"
+          meta-touch-controls="hand: left"
           teleport-controls="cameraRig: #cameraRig; teleportOrigin: #head; button: trigger; curveShootingSpeed: 10; type: parabolic; landingMaxAngle: 60; collisionEntities: a-box, a-plane"
         ></a-entity>
 
         <a-entity
           id="rightHand"
           hand-controls="hand: right; handModelStyle: toon; color: #15ACCF"
+          oculus-touch-controls="hand: right"
           teleport-controls="cameraRig: #cameraRig; teleportOrigin: #head; button: trigger; curveShootingSpeed: 10; type: parabolic; landingMaxAngle: 60; collisionEntities: a-box, a-plane"
         ></a-entity>
       </a-entity>
