@@ -152,19 +152,39 @@
         >
         </a-entity>
 
+        <!-- Left Hand -->
         <a-entity
           id="leftHand"
           hand-controls="hand: left; handModelStyle: toon; color: #15ACCF"
-          meta-touch-controls="hand: left"
+          oculus-touch-controls="hand: left"
           teleport-controls="cameraRig: #cameraRig; teleportOrigin: #head; button: trigger; curveShootingSpeed: 10; type: parabolic; landingMaxAngle: 60; collisionEntities: a-box, a-plane"
-        ></a-entity>
+        >
+          <!-- Visual cue for controller tracking -->
+          <a-ring
+            radius-inner="0.01"
+            radius-outer="0.02"
+            position="0 0.04 -0.04"
+            rotation="-70 0 0"
+            material="color: cyan; shader: flat"
+          ></a-ring>
+        </a-entity>
 
+        <!-- Right Hand -->
         <a-entity
           id="rightHand"
           hand-controls="hand: right; handModelStyle: toon; color: #15ACCF"
           oculus-touch-controls="hand: right"
           teleport-controls="cameraRig: #cameraRig; teleportOrigin: #head; button: trigger; curveShootingSpeed: 10; type: parabolic; landingMaxAngle: 60; collisionEntities: a-box, a-plane"
-        ></a-entity>
+        >
+          <!-- Visual cue for controller tracking -->
+          <a-ring
+            radius-inner="0.01"
+            radius-outer="0.02"
+            position="0 0.04 -0.04"
+            rotation="-70 0 0"
+            material="color: cyan; shader: flat"
+          ></a-ring>
+        </a-entity>
       </a-entity>
     </a-scene>
   </body>
