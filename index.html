@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-t" />
     <title>VR Obstacle Course</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
@@ -28,6 +28,7 @@
 
       <!-- Starting platform -->
       <a-box
+        class="teleport-platform"
         position="0 0.1 -3"
         width="3"
         height="0.2"
@@ -44,6 +45,7 @@
 
       <!-- Platform 1 - straight ahead -->
       <a-box
+        class="teleport-platform"
         position="0 0.1 -8"
         width="2.5"
         height="0.2"
@@ -53,6 +55,7 @@
 
       <!-- Platform 2 - to the right -->
       <a-box
+        class="teleport-platform"
         position="4 0.5 -12"
         width="2.5"
         height="0.2"
@@ -62,6 +65,7 @@
 
       <!-- Platform 3 - elevated -->
       <a-box
+        class="teleport-platform"
         position="1 1.2 -16"
         width="2.5"
         height="0.2"
@@ -71,6 +75,7 @@
 
       <!-- Platform 4 - back to left -->
       <a-box
+        class="teleport-platform"
         position="-3 1.5 -20"
         width="2.5"
         height="0.2"
@@ -80,6 +85,7 @@
 
       <!-- Platform 5 - forward -->
       <a-box
+        class="teleport-platform"
         position="-3 1.8 -25"
         width="2.5"
         height="0.2"
@@ -89,6 +95,7 @@
 
       <!-- Final platform -->
       <a-box
+        class="teleport-platform"
         position="0 2.2 -30"
         width="4"
         height="0.2"
@@ -144,7 +151,7 @@
       <a-sphere position="-5 1.3 -18" radius="0.8" color="#228B22"></a-sphere>
 
       <!-- Camera rig with controllers -->
-      <a-entity id="cameraRig" movement-controls="fly: false; speed: 0.15">
+      <a-entity id="cameraRig">
         <a-entity
           id="head"
           camera
@@ -157,7 +164,7 @@
           id="leftHand"
           hand-controls="hand: left; handModelStyle: toon; color: #15ACCF"
           oculus-touch-controls="hand: left"
-          blink-controls="cameraRig: #cameraRig; teleportOrigin: #head; button: trigger; curveShootingSpeed: 10; collisionEntities: a-box, a-plane; landingMaxAngle: 60"
+          blink-controls="cameraRig: #cameraRig; teleportOrigin: #head; button: trigger; curveShootingSpeed: 10; collisionEntities: .teleport-platform; landingMaxAngle: 60"
         >
         </a-entity>
 
@@ -165,7 +172,7 @@
           id="rightHand"
           hand-controls="hand: right; handModelStyle: toon; color: #15ACCF"
           oculus-touch-controls="hand: right"
-          blink-controls="cameraRig: #cameraRig; teleportOrigin: #head; button: trigger; curveShootingSpeed: 10; collisionEntities: a-box, a-plane; landingMaxAngle: 60"
+          blink-controls="cameraRig: #cameraRig; teleportOrigin: #head; button: trigger; curveShootingSpeed: 10; collisionEntities: .teleport-platform; landingMaxAngle: 60"
         >
         </a-entity>
       </a-entity>
