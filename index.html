@@ -4,76 +4,81 @@
     <meta charset="utf-8" />
     <title>VR Obstacle Course</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
     <script>
       // Simple teleport component
-      AFRAME.registerComponent('simple-teleport', {
+      AFRAME.registerComponent("simple-teleport", {
         schema: {
-          cameraRig: {type: 'selector'},
-          button: {default: 'trigger'}
+          cameraRig: { type: "selector" },
+          button: { default: "trigger" },
         },
-        init: function() {
+        init: function () {
           this.onButtonDown = this.onButtonDown.bind(this);
-          this.el.addEventListener(this.data.button + 'down', this.onButtonDown);
-          
+          this.el.addEventListener(
+            this.data.button + "down",
+            this.onButtonDown
+          );
+
           // Create teleport indicator
-          this.teleportIndicator = document.createElement('a-ring');
-          this.teleportIndicator.setAttribute('color', '#00ff00');
-          this.teleportIndicator.setAttribute('radius-inner', '0.2');
-          this.teleportIndicator.setAttribute('radius-outer', '0.4');
-          this.teleportIndicator.setAttribute('rotation', '-90 0 0');
-          this.teleportIndicator.setAttribute('visible', 'false');
+          this.teleportIndicator = document.createElement("a-ring");
+          this.teleportIndicator.setAttribute("color", "#00ff00");
+          this.teleportIndicator.setAttribute("radius-inner", "0.2");
+          this.teleportIndicator.setAttribute("radius-outer", "0.4");
+          this.teleportIndicator.setAttribute("rotation", "-90 0 0");
+          this.teleportIndicator.setAttribute("visible", "false");
           this.el.sceneEl.appendChild(this.teleportIndicator);
-          
+
           // Create laser line
-          this.laserLine = document.createElement('a-entity');
-          this.laserLine.setAttribute('line', {
-            start: '0 0 0',
-            end: '0 0 -5',
-            color: '#00ff00',
-            opacity: 0.6
+          this.laserLine = document.createElement("a-entity");
+          this.laserLine.setAttribute("line", {
+            start: "0 0 0",
+            end: "0 0 -5",
+            color: "#00ff00",
+            opacity: 0.6,
           });
           this.el.appendChild(this.laserLine);
         },
-        tick: function() {
+        tick: function () {
           // Raycast from controller
           var el = this.el;
           var direction = new THREE.Vector3(0, 0, -1);
           direction.applyQuaternion(el.object3D.quaternion);
-          
+
           var raycaster = new THREE.Raycaster();
           raycaster.set(el.object3D.position, direction);
           raycaster.far = 10;
-          
+
           // Get all platforms
-          var platforms = Array.from(document.querySelectorAll('.collidable')).map(e => e.object3D);
+          var platforms = Array.from(
+            document.querySelectorAll(".collidable")
+          ).map((e) => e.object3D);
           var intersects = raycaster.intersectObjects(platforms, true);
-          
+
           if (intersects.length > 0) {
             var point = intersects[0].point;
-            this.teleportIndicator.setAttribute('visible', 'true');
-            this.teleportIndicator.setAttribute('position', point);
+            this.teleportIndicator.setAttribute("visible", "true");
+            this.teleportIndicator.setAttribute("position", point);
             this.targetPosition = point;
-            
+
             // Update laser line
             var localEnd = el.object3D.worldToLocal(point.clone());
-            this.laserLine.setAttribute('line', 'end', localEnd);
+            this.laserLine.setAttribute("line", "end", localEnd);
           } else {
-            this.teleportIndicator.setAttribute('visible', 'false');
-            this.laserLine.setAttribute('line', 'end', '0 0 -5');
+            this.teleportIndicator.setAttribute("visible", "false");
+            this.laserLine.setAttribute("line", "end", "0 0 -5");
             this.targetPosition = null;
           }
         },
-        onButtonDown: function() {
+        onButtonDown: function () {
           if (this.targetPosition) {
             var rig = this.data.cameraRig || this.el.sceneEl.camera.el.parentEl;
             var offset = this.targetPosition.clone();
             offset.y += 0.1; // Slight offset above ground
-            rig.setAttribute('position', offset);
+            rig.setAttribute("position", offset);
           }
-        }
+        },
       });
-    </script>   
+    </script>
   </head>
   <body>
     <a-scene>
