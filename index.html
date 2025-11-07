@@ -10,15 +10,24 @@
       AFRAME.registerComponent("audio-handler", {
         init: function () {
           this.teleportSound = document.querySelector("#teleport-sound");
-          this.finishSound = document.querySelector("#finish-sound");
-          this.finishPlatform = document.querySelector("#final-platform");
 
           this.el.addEventListener("teleported", (e) => {
             this.teleportSound.components.sound.playSound();
 
-            if (e.detail.landingTarget && e.detail.landingTarget.id === 'final-platform') {
-              this.finishSound.components.sound.playSound();
+            if (e.detail.landingTarget) {
+              e.detail.landingTarget.emit("player-landed");
             }
+          });
+        },
+      });
+    </script>
+    <script>
+      AFRAME.registerComponent("finish-line", {
+        init: function () {
+          this.el.addEventListener("player-landed", () => {
+            document
+              .querySelector("#finish-sound")
+              .components.sound.playSound();
           });
         },
       });
@@ -121,13 +130,13 @@
 
       <!-- Final platform -->
       <a-box
-        id="final-platform"
         class="teleport-platform"
         position="0 2.2 -30"
         width="4"
         height="0.2"
         depth="4"
         color="#32CD32"
+        finish-line
       ></a-box>
       <a-text
         value="FINISH!"
